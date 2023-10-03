@@ -3,7 +3,7 @@ import '../Features/Features.css'
 
 function Features({title,image,content}) {
   return (
-    <div className='features'>
+    <div>
       <h2 className="sr-only">Features</h2>
       <div className="feature-item">
         <img src={image} alt="Chat Icon" className="feature-icon" />

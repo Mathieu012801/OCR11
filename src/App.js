@@ -16,7 +16,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/SignIn' element={<SignIn />} />
           <Route path='/Transaction' element={<Transaction />} />
-          <Route path='/Error' element={<Error />} />
+          <Route path='/*' element={<Error />} />
         </Routes>
       
       <Footer />

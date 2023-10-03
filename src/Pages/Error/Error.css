@@ -1,0 +1,27 @@
+.error {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: auto;
+}
+
+.error h1 {
+    font-size: 6rem;
+    margin: 0;
+}
+
+.error p {
+    font-size: 1.6rem;
+}
+
+@media (min-width: 920px) {
+    .error h1 {
+        font-size: 20rem;
+    }
+
+    .error p {
+        font-size: 2rem;
+    }
+}
