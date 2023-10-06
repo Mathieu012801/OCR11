@@ -31,6 +31,9 @@
   .main-nav-item {
     text-decoration: none;
     margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
   
   .main-nav-item:hover {
@@ -45,4 +48,7 @@
   .main-nav-logo-image {
     max-width: 100%;
     width: 200px;
+  }
+  .main-nav i{
+    margin-right: 5px;
   }

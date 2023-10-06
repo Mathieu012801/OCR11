@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 function Form () {
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("") 
+  const [remember, setRemember]=useState(false)
   const navigate=useNavigate()
   async function login (userInfo){
  await fetch("http://localhost:3001/api/v1/user/login",{
@@ -20,10 +21,20 @@ function Form () {
    if(response.ok){
     response.json().then(data=>{
       const token= data.body.token
-      console.log(token)
-      localStorage.setItem("token", token)
-      navigate("/Transaction")
+      const validate = JSON.parse(userInfo)
+      if(validate.remember===true){
+        localStorage.setItem("token",token)
+        navigate("/Transaction")
 
+      }
+      else if(validate.remember===false){
+        sessionStorage.setItem("token", token)
+        navigate("/Transaction")
+
+      }
+      console.log(validate.remember)
+      console.log(sessionStorage.getItem("token"))
+      return data
     })
    }
 
@@ -32,7 +43,8 @@ function Form () {
  
  const info = {
    email : email,
-   password : password 
+   password : password, 
+   remember:remember 
  }
  const userInfo= JSON.stringify(info);
 
@@ -43,8 +55,6 @@ async function submit(e){
  }
   
   return (
-
-    
         <form >
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>
@@ -55,11 +65,10 @@ async function submit(e){
             <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
           </div>
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
-                <label htmlFor="remember-me">Remember me</label>
+            <input type="checkbox" id="remember-me" onChange={()=> setRemember(!remember)} />
+                <label htmlFor="remember-me" >Remember me</label>
           </div>
         <button type='button' className="sign-in-button" onClick={submit}>Sign In</button> 
-
         </form>
 
   )
