@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // On initialise d'abord l'état de base
 const initialState = {
     userName: "null",
-    firstName: "mathieu", 
-    lastName: "delcourt",
+    firstName: "null", 
+    lastName: "null",
     token: null
 }
 

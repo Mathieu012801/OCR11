@@ -17,7 +17,8 @@ import { useNavigate } from 'react-router-dom'
   else {
     return token
   }
-}
+ }
+
 function reset(){
   localStorage.clear()
   sessionStorage.clear()
@@ -27,6 +28,7 @@ function Header() {
   const userName = useSelector(selectUserName)
   const token = controlStorage()
   const navigate = useNavigate()
+  
   if (token === null) {
   return (
     <div>
@@ -69,16 +71,15 @@ function Header() {
             e.preventDefault()
             reset()
             navigate("/")
-            
           }}>
     <i className="fa fa-sign-out"></i>
     Sign Out 
   </Link>
 </div>
 </nav>
-</div>)
-
-}
+    </div>
+  )
+ }
 }
 
 export default Header
