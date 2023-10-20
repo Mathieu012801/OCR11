@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom'
 function Form () {
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("") 
-  const [remember, setRemember]=useState(false)
+  const [remember, setRemember] = useState(false)
+  const [error,setError]=useState(false)
   const navigate=useNavigate()
   async function login (userInfo){
  await fetch("http://localhost:3001/api/v1/user/login",{
@@ -17,8 +18,11 @@ function Form () {
        "Content-Type" : "application/json"
      }, 
      body : userInfo
-   }).then(response=>{
-   if(response.ok){
+ }).then(response => {
+   if (!response.ok) {
+    setError(true)
+  }
+   else if(response.ok){
     response.json().then(data=>{
       const token= data.body.token
       const validate = JSON.parse(userInfo)
@@ -32,6 +36,7 @@ function Form () {
         navigate("/Transaction")
 
       }
+     
       console.log(validate.remember)
       console.log(sessionStorage.getItem("token"))
       return data
@@ -62,7 +67,10 @@ async function submit(e){
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+        {
+          error && <p className='error'>Mot de passe ou identifiant incorrectes </p>
+        }
           </div>
           <div className="input-remember">
             <input type="checkbox" id="remember-me" onChange={()=> setRemember(!remember)} />

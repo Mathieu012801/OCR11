@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, } from 'react'
 import '../Transaction/Transaction.css'
 import Account from '../../components/Account/Account'
 import Editionform from '../../components/Editionform/Editionform'
@@ -6,6 +6,8 @@ import { useSelector,useDispatch } from 'react-redux'
 import { selectFirstName,selectLastName} from '../../selector'
 import { controlStorage } from '../../components/Header/Header'
 import { setFirstName, setLastName, setUserName } from '../../reducers/userSlice'
+import { useNavigate } from 'react-router-dom'
+
 
 
 
@@ -13,9 +15,10 @@ import { setFirstName, setLastName, setUserName } from '../../reducers/userSlice
 
 function Transaction() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const token = controlStorage()
   async function getInfo() {
    
-     const token = controlStorage()
      await fetch("http://localhost:3001/api/v1/user/profile", {
       method: "POST",
       headers: {
@@ -35,7 +38,11 @@ function Transaction() {
   }
   
   useEffect(() => {
+    if (token === null || token === undefined) {
+      navigate("/SignIn")
+    }
     getInfo()
+
   })
     
   const[edit, setEdit]=useState(false)

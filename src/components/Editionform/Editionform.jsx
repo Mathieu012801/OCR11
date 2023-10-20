@@ -16,6 +16,7 @@ function Editionform() {
   const test=JSON.stringify(addUserName)
   const firstName = useSelector(selectFirstName)
   const lastName = useSelector(selectLastName)
+
   
   async function majUserName(addUserName) {
     const token = controlStorage()
@@ -28,6 +29,7 @@ function Editionform() {
       },
       body: addUserName 
     })
+
     
     }  
 
@@ -38,7 +40,7 @@ function Editionform() {
         <h1 className='editionForm_title'>Edit user info</h1>
         <div className="edition_items">
           <label htmlFor="userName">User Name : </label>
-          <input type="text" id='userName' onChange={(e)=> setNewUserName(e.target.value)} />
+          <input type="text" id='userName' onChange={(e) => setNewUserName(e.target.value)} required />
         </div>
         <div className="edition_items">
           <label htmlFor="firstName">First Name : </label>
@@ -49,7 +51,7 @@ function Editionform() {
           <input type="text" id='lastName' placeholder= {lastName} disabled/>
         </div>
         <div className="editionButton">
-          <button type='submit' className='editForm_button' onClick={e=> majUserName(test)}>Save</button>
+          <button type='submit' className='editForm_button' onClick={e => majUserName(test)}>Save</button>
           <button className='editForm_button'>Cancel</button>
          
         </div>

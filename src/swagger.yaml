@@ -1,0 +1,170 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Transactions API
+schemes:
+  - https
+basePath: /api/v1
+paths:
+  /account:
+    get:
+      summary: Get Account
+      description: Retrieve user account.
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: Success - Get account
+          schema: 
+            $ref: '#/definitions/AccountApiResponse'
+        401:
+          description: Unauthorized
+        500:
+          description: Server error
+  /account/{account_id}/transactions:
+    get:
+      summary: Get Account Transactions
+      description: Retrieve transactions for a specific account.
+      security:
+        - Bearer: []
+      parameters:
+        - name: account_id
+          in: path
+          description: Account ID to fetch transactions for.
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success - Get transactions
+          schema: 
+            $ref: '#/definitions/TransactionApiResponse'
+        401:
+          description: Unauthorized
+        404:
+          description: Account not found
+        500:
+          description: Server error
+  /transactions/{transaction_id}/category:
+    put:
+      summary: Modify Transaction Category
+      description: Modify the category of a specific transaction.
+      security:
+        - Bearer: []
+      parameters:
+        - name: transaction_id
+          in: path
+          description: Transaction ID to modify.
+          required: true
+          type: integer
+        - name: category
+          in: body
+          description: New category to assign to the transaction.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Transaction category modified successfully
+          schema: 
+             $ref: '#/definitions/CategoryApiResponse'
+        401:
+          description: Unauthorized
+        404:
+          description: Transaction not found
+        500:
+          description: Server error
+  /transactions/{transaction_id}/note:
+    post:
+      summary: Add Note to Transaction
+      description: Add a note to a specific transaction.
+      security:
+        - Bearer: []
+      parameters:
+        - name: transaction_id
+          in: path
+          description: Transaction ID to add a note to.
+          required: true
+          type: integer
+        - name: note
+          in: body
+          description: Note to add to the transaction.
+          required: true
+          schema:
+            type: string
+      responses:
+        201:
+          description: Note added to the transaction successfully
+        401:
+          description: Unauthorized
+        404:
+          description: Transaction or account not found
+        500:
+          description: Server error
+  /transactions/{transaction_id}/note/{note_id}:
+    delete:
+      summary: Delete Note from Transaction
+      description: Delete a note from a specific transaction.
+      security:
+        - Bearer: []
+      parameters:
+        - name: transaction_id
+          in: path
+          description: Transaction ID to delete a note from.
+          required: true
+          type: integer
+        - name: note_id
+          in: path
+          description: Note ID to delete.
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Note deleted from the transaction successfully
+        401:
+          description: Unauthorized
+        404:
+          description: Transaction or note not found
+        500:
+          description: Server error
+          
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  AccountApiResponse:
+    type: object
+    properties:
+      transactions:
+        type: object
+        properties:
+          transaction:
+            type: object
+            properties:
+              date:
+                type: string
+              description:
+                type: string
+              amount: 
+                type: string
+              balance:
+                type: number
+  TransactionApiResponse:
+    type: object
+    properties: 
+      transaction: 
+        type: object
+        properties: 
+          transaction-type: 
+            type: string
+          category: 
+            type: string
+          note: 
+            type: string
+  CategoryApiResponse:
+    type: object
+    properties: 
+        category: 
+          type: string
+        
