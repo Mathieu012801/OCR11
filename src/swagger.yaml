@@ -6,22 +6,8 @@ schemes:
   - https
 basePath: /api/v1
 paths:
-  /account:
-    get:
-      summary: Get Account
-      description: Retrieve user account.
-      security:
-        - Bearer: []
-      responses:
-        200:
-          description: Success - Get account
-          schema: 
-            $ref: '#/definitions/AccountApiResponse'
-        401:
-          description: Unauthorized
-        500:
-          description: Server error
-  /account/{account_id}/transactions:
+
+  /accounts/{account_id}/transactions:
     get:
       summary: Get Account Transactions
       description: Retrieve transactions for a specific account.
@@ -61,7 +47,7 @@ paths:
           description: New category to assign to the transaction.
           required: true
           schema:
-            type: string
+             $ref: '#/definitions/CategoryApiRequest'
       responses:
         200:
           description: Transaction category modified successfully
@@ -94,24 +80,21 @@ paths:
       responses:
         201:
           description: Note added to the transaction successfully
+          schema:
+            $ref: '#/definitions/NoteApiResponse'
         401:
           description: Unauthorized
         404:
           description: Transaction or account not found
         500:
           description: Server error
-  /transactions/{transaction_id}/note/{note_id}:
+  /transaction/note/{note_id}:
     delete:
       summary: Delete Note from Transaction
       description: Delete a note from a specific transaction.
       security:
         - Bearer: []
       parameters:
-        - name: transaction_id
-          in: path
-          description: Transaction ID to delete a note from.
-          required: true
-          type: integer
         - name: note_id
           in: path
           description: Note ID to delete.
@@ -133,25 +116,17 @@ securityDefinitions:
     name: Authorization
     in: header
 definitions:
-  AccountApiResponse:
+  NoteApiResponse:
     type: object
     properties:
-      transactions:
-        type: object
-        properties:
-          transaction:
-            type: object
-            properties:
-              date:
-                type: string
-              description:
-                type: string
-              amount: 
-                type: string
-              balance:
-                type: number
+      note_id: 
+        type: string
+        
+              
   TransactionApiResponse:
-    type: object
+    type: array
+    items: 
+        $ref: '#/definitions/Transaction'
     properties: 
       transaction: 
         type: object
@@ -167,4 +142,32 @@ definitions:
     properties: 
         category: 
           type: string
-        
+  Transaction: 
+    type: object
+    properties:
+          transaction:
+            type: object
+            properties:
+              date:
+                type: string
+              description:
+                type: string
+              amount: 
+                type: string
+              balance:
+                type: number
+              details: 
+                type: object
+                properties:
+                  transaction-type:
+                    type: string
+                  category: 
+                    type: string
+                  note:
+                    type: string
+  CategoryApiRequest: 
+    type: object
+    properties: 
+      category: 
+        type: string
+                  

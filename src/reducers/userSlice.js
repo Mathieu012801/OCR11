@@ -10,7 +10,7 @@ const initialState = {
 
 const userSlice = createSlice({
     name: 'user',
-    initialState, // Correction ici
+    initialState, 
     reducers: {
         setUserName: (state, { payload }) => {
             state.userName = payload;

@@ -1,9 +1,9 @@
 import React from 'react'
 import Hero from '../../components/Hero/Hero'
 import Features from '../../components/Features/Features'
-import Chat from '../../assets/icon-chat.png'
-import Money from '../../assets/icon-money.png'
-import Security from '../../assets/icon-security.png'
+import Chat from '../../assets/icon-chat.webp'
+import Money from '../../assets/icon-money.webp'
+import Security from '../../assets/icon-security.webp'
 import'../Home/Home.css'
 
 function Home() {
